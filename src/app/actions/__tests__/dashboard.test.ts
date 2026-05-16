@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { getStudentDashboardData, getTeacherDashboardData } from '../dashboard'
 import { prisma } from '@/lib/prisma'
-import { auth } from '@clerk/nextjs/server'
+import { auth } from '@/lib/auth'
 
 vi.mock('@/lib/analytics', () => ({
   getStudentPerformanceProjection: vi.fn().mockResolvedValue({

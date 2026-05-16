@@ -1,7 +1,7 @@
 "use server"
 
 import { prisma } from "@/lib/prisma"
-import { auth } from "@clerk/nextjs/server"
+import { auth } from "@/lib/auth"
 
 export async function getSubmissions() {
   try {

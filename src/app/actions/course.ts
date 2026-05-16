@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
-import { auth } from "@clerk/nextjs/server"
+import { auth } from "@/lib/auth"
 import { EducationLevel } from "@prisma/client"
 
 import { courseSchema } from "@/lib/validations"

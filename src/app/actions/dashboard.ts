@@ -1,37 +1,23 @@
 "use server"
 
 import { prisma } from "@/lib/prisma"
-import { auth } from "@clerk/nextjs/server"
+import { auth } from "@/lib/auth"
 import { StudentDashboardData, TeacherDashboardData } from "@/types"
 import { redirect } from "next/navigation"
 import { getStudentPerformanceProjection, getClassroomPerformanceTrends } from "@/lib/analytics"
 
 export async function getStudentDashboardData(): Promise<StudentDashboardData> {
   try {
-    // Demo Mode Bypass
-  const isDemoMode = !process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY.includes("YOUR_KEY_HERE")
-  
-  let userId: string | null = null;
-  if (!isDemoMode) {
-    const authData = await auth();
-    userId = authData.userId;
-    if (!userId) {
-      redirect("/login")
-    }
-  }
+  const { userId } = await auth();
 
-  const user = await prisma.user.findUnique({ 
-    where: { clerkId: userId || "demo_student_clerk_id" },
+  const user = userId ? await prisma.user.findUnique({ 
+    where: { clerkId: userId },
     include: {
       badges: {
         include: { badge: true }
       }
     }
-  })
-  
-  if (!user && !isDemoMode) {
-    redirect("/onboarding")
-  }
+  }) : null;
 
   // Fallback for Demo User
   const currentUser = user || {
@@ -121,26 +107,12 @@ export async function getStudentDashboardData(): Promise<StudentDashboardData> {
 
 export async function getTeacherDashboardData(): Promise<TeacherDashboardData> {
   try {
-    // Demo Mode Bypass
-  const isDemoMode = !process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY.includes("YOUR_KEY_HERE")
+  const { userId } = await auth();
 
-  let userId: string | null = null;
-  if (!isDemoMode) {
-    const authData = await auth();
-    userId = authData.userId;
-    if (!userId) {
-      redirect("/login")
-    }
-  }
-
-  let user = await prisma.user.findUnique({ where: { clerkId: userId || "demo_teacher_clerk_id" } })
-  
-  if (!user && !isDemoMode) {
-    redirect("/onboarding")
-  }
+  let user = userId ? await prisma.user.findUnique({ where: { clerkId: userId } }) : null;
 
   // Fallback for Demo Teacher
-  if (!user && isDemoMode) {
+  if (!user) {
      const seededTeacher = await prisma.user.findFirst({ where: { role: "TEACHER" } })
      user = seededTeacher || {
        id: "demo_teacher",

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { submitVoiceExam } from '../voice-submission'
 import { prisma } from '@/lib/prisma'
-import { auth } from '@clerk/nextjs/server'
+import { auth } from '@/lib/auth'
 
 vi.mock('../gamification', () => ({
   updateStreak: vi.fn().mockResolvedValue({ success: true, streak: 4 }),

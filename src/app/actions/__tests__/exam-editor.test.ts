@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { deleteExamQuestion } from '../exam-editor'
 import { prisma } from '@/lib/prisma'
-import { auth } from '@clerk/nextjs/server'
+import { auth } from '@/lib/auth'
 import { revalidatePath } from 'next/cache'
 
 beforeEach(() => {

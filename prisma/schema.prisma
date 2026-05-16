@@ -390,7 +390,7 @@ model TeacherNote {
   studentId String
   teacherId String
   student  User     @relation("StudentNotes", fields: [studentId], references: [id], onDelete: Cascade)
-  teacher  User     @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  teacher  User     @relation("TeacherNotes", fields: [teacherId], references: [id], onDelete: Cascade)
   content  String
   createdAt DateTime @default(now())
 

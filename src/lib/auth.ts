@@ -1,9 +1,17 @@
-/**
- * Utility to determine if the application is running in "Demo Mode".
- * Demo Mode is active when Clerk authentication keys are missing or set to placeholder values.
- * This allows for codebase exploration and UI testing without a functional Auth provider.
- */
-export function getIsDemoMode() {
-  const key = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-  return !key || key === "" || key.includes("YOUR_KEY_HERE") || key === "undefined";
+export function auth(): Promise<{ userId: string }> {
+  return Promise.resolve({ userId: "user_student_1" })
+}
+
+export function currentUser(): Promise<{
+  id: string
+  firstName: string
+  lastName: string
+  emailAddresses: { emailAddress: string }[]
+} | null> {
+  return Promise.resolve({
+    id: "user_student_1",
+    firstName: "Yasmine",
+    lastName: "Badra",
+    emailAddresses: [{ emailAddress: "student@peda.dz" }]
+  })
 }

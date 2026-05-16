@@ -1,7 +1,7 @@
 "use server"
 
 import { prisma } from "@/lib/prisma"
-import { auth } from "@clerk/nextjs/server"
+import { auth } from "@/lib/auth"
 
 export async function getAllUsers(page: number = 1, limit: number = 10) {
   try {

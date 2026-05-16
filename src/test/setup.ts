@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom'
 import { vi } from 'vitest'
 
-// Mock Clerk
-vi.mock('@clerk/nextjs/server', () => ({
+// Mock auth
+vi.mock('@/lib/auth', () => ({
   auth: vi.fn().mockResolvedValue({ userId: 'user_123' }),
 }))
 

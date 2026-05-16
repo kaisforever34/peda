@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { SignOutButton } from "@clerk/nextjs"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -69,8 +68,6 @@ export function AppShell({ children, role = "STUDENT", userName = "User" }: AppS
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const navItems = getNavItems(role, t)
 
-  const isDemoMode = !process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY.includes("YOUR_KEY_HERE")
-
   return (
     <div className="flex min-h-screen font-sans" dir={dir}>
       <aside className="w-64 border-e border-border bg-card flex flex-col hidden md:flex">
@@ -109,27 +106,15 @@ export function AppShell({ children, role = "STUDENT", userName = "User" }: AppS
             {t("settings")}
           </Link>
           
-          {isDemoMode ? (
-            <Link href="/">
-              <Button
-                variant="ghost"
-                className="w-full justify-start text-muted-foreground mt-1"
-              >
-                <LogOut className="h-4 w-4 me-3" />
-                {t("sign_out")} (Demo)
-              </Button>
-            </Link>
-          ) : (
-            <SignOutButton redirectUrl="/">
-              <Button
-                variant="ghost"
-                className="w-full justify-start text-muted-foreground mt-1"
-              >
-                <LogOut className="h-4 w-4 me-3" />
-                {t("sign_out")}
-              </Button>
-            </SignOutButton>
-          )}
+          <Link href="/">
+            <Button
+              variant="ghost"
+              className="w-full justify-start text-muted-foreground mt-1"
+            >
+              <LogOut className="h-4 w-4 me-3" />
+              {t("sign_out")}
+            </Button>
+          </Link>
         </div>
       </aside>
 
@@ -232,27 +217,15 @@ export function AppShell({ children, role = "STUDENT", userName = "User" }: AppS
                 <Settings className="h-4 w-4" />
                 {t("settings")}
               </Link>
-              {isDemoMode ? (
-                <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start text-muted-foreground mt-1"
-                  >
-                    <LogOut className="h-4 w-4 me-3" />
-                    {t("sign_out")} (Demo)
-                  </Button>
-                </Link>
-              ) : (
-                <SignOutButton redirectUrl="/">
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start text-muted-foreground mt-1"
-                  >
-                    <LogOut className="h-4 w-4 mr-3" />
-                    {t("sign_out")}
-                  </Button>
-                </SignOutButton>
-              )}
+              <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start text-muted-foreground mt-1"
+                >
+                  <LogOut className="h-4 w-4 me-3" />
+                  {t("sign_out")}
+                </Button>
+              </Link>
             </div>
           </aside>
         </div>

@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache"
 import { withRole } from "@/lib/safe-action"
 import { logger } from "@/lib/logger"
 import { classroomSchema } from "@/lib/validations"
-import { auth } from "@clerk/nextjs/server"
+import { auth } from "@/lib/auth"
 import crypto from "crypto"
 
 export const createClassroom = withRole(["TEACHER"], async (user, formData: FormData) => {

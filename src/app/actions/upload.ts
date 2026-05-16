@@ -1,7 +1,7 @@
 "use server"
 
 import { uploadFile } from "@/lib/storage"
-import { auth } from "@clerk/nextjs/server"
+import { auth } from "@/lib/auth"
 
 export async function uploadAction(formData: FormData) {
   try {
