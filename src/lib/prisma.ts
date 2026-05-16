@@ -62,18 +62,13 @@ function tryCreatePrismaClient(): PrismaClient | null {
         const adapter = new PrismaBetterSqlite3({ url })
         return new PrismaClient({ adapter, log: ["error", "warn"] })
       } catch (e) {
-        console.warn("Failed to create SQLite adapter, using null proxy:", e)
+        console.warn("SQLite database not available, using null proxy:", (e as any)?.message || e)
         return null
       }
     }
 
-    // For non-SQLite URLs, try with accelerateUrl or adapter
-    try {
-      return new PrismaClient({ accelerateUrl: url, log: ["error", "warn"] })
-    } catch (e) {
-      console.warn("Failed to create PrismaClient with accelerateUrl, using null proxy:", e)
-      return null
-    }
+    console.warn(`Unknown DATABASE_URL scheme, using null proxy: ${url.split(":")[0]}`)
+    return null
   } catch (e) {
     console.warn("Failed to create PrismaClient, using null proxy:", e)
     return null

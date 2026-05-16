@@ -6,14 +6,14 @@ export type DemoUser = {
 }
 
 export async function auth(): Promise<{ userId: string }> {
-  return { userId: "user_student_1" }
+  return { userId: "user_teacher_1" }
 }
 
 export async function getDemoUser(): Promise<DemoUser> {
   return {
-    userId: "user_student_1",
-    id: "demo_student",
-    name: "Demo Student",
-    role: "STUDENT",
+    userId: "user_teacher_1",
+    id: "demo_teacher",
+    name: "Demo Teacher",
+    role: "TEACHER",
   }
 }
