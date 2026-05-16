@@ -19,9 +19,7 @@ export default async function StudentAssignmentsPage() {
   }
 
   const user = await prisma.user.findUnique({ where: { clerkId: userId } })
-  if (!user) return null
-
-  const assignments = await prisma.assignment.findMany({
+  const assignments = user ? await prisma.assignment.findMany({
     where: {
       course: {
         enrollments: {
@@ -37,7 +35,7 @@ export default async function StudentAssignmentsPage() {
       }
     },
     orderBy: { dueDate: "asc" }
-  })
+  }) : []
 
   return (
     <AppShell role="STUDENT">

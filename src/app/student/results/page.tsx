@@ -1,6 +1,5 @@
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { notFound } from "next/navigation"
 import { AppShell } from "@/components/layout/app-shell"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -33,16 +32,14 @@ export default async function StudentResultsPage() {
   }
 
   const user = await prisma.user.findUnique({ where: { clerkId: userId } })
-  if (!user) notFound()
-
-  const submissions = await prisma.submission.findMany({
+  const submissions = user ? await prisma.submission.findMany({
     where: { studentId: user.id },
     include: {
       exam: { select: { id: true, title: true, type: true, courseId: true } },
       assignment: { select: { id: true, title: true, courseId: true } },
     },
     orderBy: { createdAt: "desc" },
-  })
+  }) : []
 
   const finalScore = (sub: typeof submissions[0]) =>
     sub.teacherScore ?? sub.aiScore
