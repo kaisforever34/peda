@@ -41,10 +41,7 @@ export function LandingHeader() {
           </div>
 
           <div className="flex items-center gap-2">
-            <Link href="/login">
-              <Button variant="ghost" className="text-sm font-bold">{t("sign_in") || "Sign In"}</Button>
-            </Link>
-            <Link href="/register">
+            <Link href="/student/dashboard">
               <Button className="rounded-xl shadow-primary/25 shadow-lg px-6 font-bold">
                 {t("get_started") || "Get Started"}
               </Button>
