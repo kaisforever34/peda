@@ -6,17 +6,9 @@ import { getCourses } from "@/app/actions/course"
 import { CreateExamDialog } from "./create-exam-dialog"
 import { ExamActions } from "@/components/teacher/exam-actions"
 
-import { Pagination } from "@/components/ui/pagination"
-
-export default async function TeacherExamsPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ page?: string }>
-}) {
-  const { page } = await searchParams
-  const currentPage = Number(page) || 1
-  const { exams, pages } = await getExams(currentPage)
-  const { courses } = await getCourses()
+export default async function TeacherExamsPage() {
+  const { exams, pages } = await getExams(1, 100)
+  const { courses } = await getCourses(1, 100)
 
   return (
     <AppShell role="TEACHER">
@@ -64,11 +56,6 @@ export default async function TeacherExamsPage({
               ))}
             </div>
 
-            <Pagination 
-              totalPages={pages} 
-              currentPage={currentPage} 
-              baseUrl="/teacher/exams" 
-            />
           </div>
         )}
       </div>

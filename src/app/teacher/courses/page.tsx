@@ -15,16 +15,8 @@ function getStatusBadge(status: string) {
   )
 }
 
-import { Pagination } from "@/components/ui/pagination"
-
-export default async function TeacherCoursesPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ page?: string }>
-}) {
-  const { page } = await searchParams
-  const currentPage = Number(page) || 1
-  const { courses, total, pages } = await getCourses(currentPage)
+export default async function TeacherCoursesPage() {
+  const { courses, total, pages } = await getCourses(1, 100)
   
   const published = courses.filter(c => c.status === "PUBLISHED")
   const draft = courses.filter(c => c.status === "DRAFT")
@@ -145,11 +137,6 @@ export default async function TeacherCoursesPage({
               </div>
             )}
             
-            <Pagination 
-              totalPages={pages} 
-              currentPage={currentPage} 
-              baseUrl="/teacher/courses" 
-            />
           </>
         )}
       </div>
